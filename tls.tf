@@ -46,8 +46,12 @@ resource "tls_cert_request" "server-node" {
   }
 
   dns_names = concat(local.fqdn_tls, local.consul_fqdn_tls)
-   
-  }
+
+  ip_addresses = [
+    "127.0.0.1"
+  ]
+
+}
 
 resource "tls_locally_signed_cert" "server-node" {
   count              = local.server_count
