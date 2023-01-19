@@ -12,7 +12,7 @@ resource "tls_self_signed_cert" "ca" {
   private_key_pem   = tls_private_key.ca[count.index].private_key_pem
   is_ca_certificate = true
 
-  validity_period_hours = 12
+  validity_period_hours = 720
   allowed_uses = [
     "key_encipherment",
     "key_agreement",
@@ -28,7 +28,51 @@ resource "tls_self_signed_cert" "ca" {
   }
 }
 
+###################
+## Cluster Nodes ##
+###################
+resource "tls_private_key" "server-node" {
+  count       = local.server_count
+  algorithm   = "ECDSA"
+  ecdsa_curve = "P384"
+}
 
+resource "tls_cert_request" "server-node" {
+  count           = local.server_count
+  private_key_pem = tls_private_key.server-node[count.index].private_key_pem
+  subject {
+    common_name  = "${var.server_name}-0${count.index +1}.${var.dns_domain}"
+    organization = var.organization
+  }
+
+  dns_names = [
+    "${var.server_name}-0${count.index +1}.${var.dns_domain}",
+    "server.${var.datacenter}.consul",
+  ]
+}
+
+resource "tls_locally_signed_cert" "server-node" {
+  count              = local.server_count
+  cert_request_pem   = tls_cert_request.server-node[count.index].cert_request_pem
+  ca_private_key_pem = tls_private_key.ca[count.index].private_key_pem
+  ca_cert_pem        = tls_self_signed_cert.ca[count.index].cert_pem
+
+  validity_period_hours = 720
+  allowed_uses = [
+    "key_encipherment",
+    "key_agreement",
+    "digital_signature",
+    "server_auth",
+    "client_auth",
+  ]
+}
+
+
+
+
+
+
+/*
 ### Vault ###
 
 resource "tls_private_key" "vault" {
@@ -116,6 +160,8 @@ resource "tls_locally_signed_cert" "consul" {
     "client_auth",
   ]
 }
+
+*/
 
 ### TFE ###
 
