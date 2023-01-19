@@ -45,11 +45,9 @@ resource "tls_cert_request" "server-node" {
     organization = var.organization
   }
 
-  dns_names = [
-    "${var.server_name}-0${count.index +1}.${var.dns_domain}",
-    "server.${var.datacenter}.consul",
-  ]
-}
+  dns_names = concat(local.fqdn_tls, local.consul_fqdn_tls)
+   
+  }
 
 resource "tls_locally_signed_cert" "server-node" {
   count              = local.server_count
