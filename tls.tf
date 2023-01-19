@@ -41,7 +41,8 @@ resource "tls_cert_request" "server-node" {
   count           = local.server_count
   private_key_pem = tls_private_key.server-node[count.index].private_key_pem
   subject {
-    common_name  = "${var.server_name}-0${count.index +1}.${var.dns_domain}"
+    #common_name  = "${var.server_name}-0${count.index +1}.${var.dns_domain}"
+    common_name  = var.common_name
     organization = var.organization
   }
 
