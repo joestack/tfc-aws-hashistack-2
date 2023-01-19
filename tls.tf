@@ -54,8 +54,8 @@ resource "tls_cert_request" "server-node" {
 resource "tls_locally_signed_cert" "server-node" {
   count              = local.server_count
   cert_request_pem   = tls_cert_request.server-node[count.index].cert_request_pem
-  ca_private_key_pem = tls_private_key.ca[count.index].private_key_pem
-  ca_cert_pem        = tls_self_signed_cert.ca[count.index].cert_pem
+  ca_private_key_pem = element(tls_private_key.ca.*.private_key_pem, count.index)
+  ca_cert_pem        = element(tls_self_signed_cert.ca.*.cert_pem, count.index)
 
   validity_period_hours = 720
   allowed_uses = [
