@@ -538,6 +538,7 @@ EOF
 #####   MAIN   #####
 ####################
 
+common
 [[ ${vault_enabled} = "true" ]] && install_vault_apt 
 [[ ${consul_enabled} = "true" ]] && install_consul_apt
 #[[ ${consul_enabled} = "true" ]] && test_consul_apt
