@@ -47,7 +47,7 @@ output "consul_datacenter" {
 }
 
 output "cluster_url" {
-  value = anytrue(var.vault_enabled, var.consul_enabled, var.nomad_enabled) ? aws_route53_record.server.*.fqdn[0] : "NULL" 
+  value = anytrue([var.vault_enabled, var.consul_enabled, var.nomad_enabled]) ? aws_route53_record.server.*.fqdn[0] : "NULL" 
 }
 
 output "vpc_cidr" {
