@@ -47,7 +47,7 @@ output "consul_datacenter" {
 }
 
 output "cluster_url" {
-  value = anytrue(var.vault_enabled, var.consul_enabled, var.nomad_enabled) ? aws_route53_record.server.*.fqdn[0] : NULL 
+  value = anytrue(var.vault_enabled, var.consul_enabled, var.nomad_enabled) ? aws_route53_record.server.*.fqdn[0] : "NULL" 
 }
 
 output "vpc_cidr" {
@@ -105,5 +105,5 @@ output "db_subnet" {
 }
 
 output "workload_vpc_security_id" {
-  value = var.consul_enabled ? aws_security_group.consul-workload[0].id : NULL
+  value = var.consul_enabled ? aws_security_group.consul-workload[0].id : "NULL"
 }
