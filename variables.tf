@@ -166,6 +166,11 @@ variable "terraform_enabled" {
   default = "false"
 }
 
+variable "tfe_fdo_method" {
+  description = "kind of deployment methodology docker, kubernetes, podman ?"
+  default = "docker"
+}
+
 variable "tfe_airgapped" {
   description = "[true or false] The value of tfe_lic has to be `base64 -w0 ` encoded if set to true"
   default     = "false"
@@ -201,5 +206,5 @@ variable "tfe_cert_email" {
 
 variable "tfe_auto_install" {
   description = "run the tfe install.sh directly by the user-data script. You can run it manually if set to false"
-  default     = "true"
+  default     = "false"
 }
