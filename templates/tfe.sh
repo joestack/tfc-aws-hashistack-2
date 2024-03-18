@@ -18,7 +18,7 @@ services:
       TFE_HOSTNAME: "${tfe_fqdn}"
       TFE_ENCRYPTION_PASSWORD: "${tfe_enc_password}"
       TFE_OPERATIONAL_MODE: "disk"
-      TFE_DISK_CACHE_VOLUME_NAME: "${COMPOSE_PROJECT_NAME}_terraform-enterprise-cache"
+      TFE_DISK_CACHE_VOLUME_NAME: "${node_name}_terraform-enterprise-cache"
       TFE_TLS_CERT_FILE: "/etc/letsencrypt/live/${tfe_fqdn}/fullchain.pem"
       TFE_TLS_KEY_FILE: "/etc/letsencrypt/live/${tfe_fqdn}/privkey.pem"
       TFE_TLS_CA_BUNDLE_FILE: "/etc/letsencrypt/live/${tfe_fqdn}/fullchain.pem"
