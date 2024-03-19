@@ -7,6 +7,9 @@ tls_is_certbot() {
 
 prerequisites() {
 
+    mkdir /home/ubuntu/tfe_disk
+    chown -R ubuntu:ubuntu /home/ubuntu/tfe_disk
+
     tee /home/ubuntu/compose.yaml > /dev/null <<EOF
 ---
 name: terraform-enterprise
@@ -22,7 +25,7 @@ services:
       TFE_TLS_CERT_FILE: "/etc/letsencrypt/live/${tfe_fqdn}/fullchain.pem"
       TFE_TLS_KEY_FILE: "/etc/letsencrypt/live/${tfe_fqdn}/privkey.pem"
       TFE_TLS_CA_BUNDLE_FILE: "/etc/letsencrypt/live/${tfe_fqdn}/fullchain.pem"
-      TFE_IACT_SUBNETS: "<IACT subnet, eg. 10.0.0.0/8,192.168.0.0/24>"
+      TFE_IACT_SUBNETS: "172.16.0.0/16"
     cap_add:
       - IPC_LOCK
     read_only: true
@@ -41,7 +44,7 @@ services:
         source: ./certs
         target: /etc/ssl/private/terraform-enterprise
       - type: bind
-        source: <mounted_disk_path_on_host>
+        source: /home/ubuntu/tfe_disk
         target: /var/lib/terraform-enterprise
       - type: volume
         source: terraform-enterprise-cache
