@@ -2,7 +2,7 @@
 
 tls_is_certbot() {
   apt-get install -y certbot 
-  certbot certonly --standalone --agree-tos -m ${tfe_cert_email} -d ${tfe_fqdn} -n
+  certbot certonly --test-cert --standalone --agree-tos -m ${tfe_cert_email} -d ${tfe_fqdn} -n
 }
 
 prerequisites() {
@@ -57,8 +57,14 @@ EOF
 
 install() {
     cd /home/ubuntu
-    echo $tfe_lic | docker login --username terraform images.releases.hashicorp.com --password-stdin
-    docker pull images.releases.hashicorp.com/hashicorp/terraform-enterprise:v202402-1
+    REGISTRY_URL="images.releases.hashicorp.com/hashicorp/terraform-enterprise"
+    TFE_RELEASE=${tfe_release}
+    IMAGE="$REGISTRY_URL:$TFE_RELEASE"
+    USERNAME="terraform"
+    PASSWORD=${tfe_lic}
+
+    docker login -u $USERNAME images.releases.hashicorp.com -p $PASSWORD
+    docker pull $IMAGE
     docker compose up --detach
 
     sleep 180
