@@ -171,6 +171,11 @@ variable "tfe_fdo_method" {
   default = "docker"
 }
 
+variable "tfe_release" {
+  description = "The release version to be used https://developer.hashicorp.com/terraform/enterprise/releases"
+  default = "v202402-1"
+}
+
 variable "tfe_airgapped" {
   description = "[true or false] The value of tfe_lic has to be `base64 -w0 ` encoded if set to true"
   default     = "false"

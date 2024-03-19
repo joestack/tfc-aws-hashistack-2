@@ -26,6 +26,7 @@ data "template_file" "tfe" {
     tfe_cert_email    = var.tfe_cert_email
     tfe_auto_install  = var.tfe_auto_install
     tfe_airgapped     = var.tfe_airgapped
+    tfe_release       = var.tfe_release
   }
 }
 

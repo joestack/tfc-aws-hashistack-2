@@ -12,7 +12,7 @@ prerequisites() {
 name: terraform-enterprise
 services:
   tfe:
-    image: images.releases.hashicorp.com/hashicorp/terraform-enterprise:<vYYYYMM-#>
+    image: images.releases.hashicorp.com/hashicorp/terraform-enterprise:${tfe_release}
     environment:
       TFE_LICENSE: "${tfe_lic}"
       TFE_HOSTNAME: "${tfe_fqdn}"
