@@ -41,7 +41,7 @@ services:
         source: /var/run/docker.sock
         target: /run/docker.sock
       - type: bind
-        source: ./certs
+        source: /etc/letsencrypt/live/${tfe_fqdn}/
         target: /etc/ssl/private/terraform-enterprise
       - type: bind
         source: /home/ubuntu/tfe_disk
@@ -58,5 +58,5 @@ EOF
 
 ## MAIN ##
 
-#tls_is_certbot
+tls_is_certbot
 prerequisites
