@@ -9,6 +9,7 @@ data "template_file" "tfe" {
   count = var.terraform_enabled ? 1 : 0
   template = (join("\n", tolist([
     file("${path.root}/templates/base.sh"),
+    file("${path.root}/templates/docker.sh"),
     file("${path.root}/templates/tfe.sh")
   ])))
   vars = {
