@@ -3,7 +3,7 @@
 This repository is a one-size-fits-all approach to get easily started with the deployment of any of the above mentioned HashiCorp tools on AWS. The main focus is about simplicity and readability. It is purely based on Terraform IaC. The TLS certs are provided by hashicorp/terraform-provider-tls. The instances are configured via "user-data" scripts (bash). The "user-data" scripts are dynamically rendered (hashicorp/terraform-provider-template) based on the assigned values in variables.tf.
 
 ---
-> Its behavor can be customized by changing/overriding the defaults in variables.tf. (**take a look at the examples at the bottom**).
+> Its behavor can be customized by changing/overriding the defaults in variables.tf. (**take a look on the examples at the bottom**).
 >
 > Take a look at the **outputs** to find the IP addresses of the instances or the initial password to get access to the Terraform Enterpise admin page on port 8800.
 >
