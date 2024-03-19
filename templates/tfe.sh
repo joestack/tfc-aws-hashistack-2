@@ -22,9 +22,9 @@ services:
       TFE_ENCRYPTION_PASSWORD: "${tfe_enc_password}"
       TFE_OPERATIONAL_MODE: "disk"
       TFE_DISK_CACHE_VOLUME_NAME: "${node_name}_terraform-enterprise-cache"
-      TFE_TLS_CERT_FILE: "/etc/letsencrypt/live/${tfe_fqdn}/fullchain.pem"
-      TFE_TLS_KEY_FILE: "/etc/letsencrypt/live/${tfe_fqdn}/privkey.pem"
-      TFE_TLS_CA_BUNDLE_FILE: "/etc/letsencrypt/live/${tfe_fqdn}/fullchain.pem"
+      TFE_TLS_CERT_FILE: "/etc/letsencrypt/archive/${tfe_fqdn}/fullchain1.pem"
+      TFE_TLS_KEY_FILE: "/etc/letsencrypt/archive/${tfe_fqdn}/privkey1.pem"
+      TFE_TLS_CA_BUNDLE_FILE: "/etc/letsencrypt/archive/${tfe_fqdn}/fullchain1.pem"
       TFE_IACT_SUBNETS: "172.16.0.0/16"
     cap_add:
       - IPC_LOCK
@@ -41,7 +41,7 @@ services:
         source: /var/run/docker.sock
         target: /run/docker.sock
       - type: bind
-        source: /etc/letsencrypt/live/${tfe_fqdn}/
+        source: /etc/letsencrypt/archive/${tfe_fqdn}/
         target: /etc/ssl/private/terraform-enterprise
       - type: bind
         source: /home/ubuntu/tfe_disk
@@ -55,8 +55,52 @@ volumes:
 EOF
 }
 
+install() {
+    cd /home/ubuntu
+    echo $tfe_lic | docker login --username terraform images.releases.hashicorp.com --password-stdin
+    docker pull images.releases.hashicorp.com/hashicorp/terraform-enterprise:v202402-1
+    docker compose up --detach
+
+    sleep 180
+
+    docker compose exec tfe tfe-health-check-status 2>&1 > /home/ubuntu/health_check
+
+    x=1
+    while [ $x -le 10 ] 
+    do
+    if [[ $(cat /home/ubuntu/health_check | grep "All checks passed.") ]]
+    then
+    CONTAINER_ID=$(docker ps | grep terraform-enterprise | awk '{print $1}')
+    echo $CONTAINER_ID > /home/ubuntu/CONTAINER_ID
+
+    ADMIN_TOKEN=$(docker exec $CONTAINER_ID tfectl admin token)
+    echo $ADMIN_TOKEN > /home/ubuntu/ADMIN_TOKEN
+
+    tee /home/ubuntu/payload.json > /dev/null <<EOF
+{
+  "username": "admin",
+  "email": "${tfe_cert_email}",
+  "password": "${tfe_auth_password}"
+}
+EOF
+
+    curl \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data @payload.json \
+  https://${tfe_fqdn}/admin/initial-admin-user?token=$${ADMIN_TOKEN}
+
+
+    else 
+        sleep 30
+        x=$(( $x +1 ))
+    fi
+    done
+
+}
 
 ## MAIN ##
 
 tls_is_certbot
 prerequisites
+install
