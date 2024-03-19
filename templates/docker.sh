@@ -14,6 +14,6 @@ echo "--> Installing"
 apt-get -y install docker-ce
 
 echo "--> Allowing docker without sudo"
-sudo usermod -aG docker "$(whoami)"
+sudo usermod -a -G docker ubuntu
 
 echo "==> Docker is done!"
