@@ -67,7 +67,7 @@ install() {
     docker pull $IMAGE
     docker compose up --detach
 
-    sleep 60
+    sleep 120
 
 
     x=1
@@ -91,6 +91,8 @@ install() {
   "password": "${tfe_auth_password}"
 }
 EOF
+
+        echo https://${tfe_fqdn}/admin/initial-admin-user?token=$ADMIN_TOKEN >> /home/ubuntu/curl_check
 
         curl --insecure \
         --header "Content-Type: application/json" \

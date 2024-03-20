@@ -68,7 +68,7 @@ resource "random_id" "tfe_enc_password" {
 }
 
 resource "random_pet" "tfe_auth_password" {
-  length = 4
+  length = 3
 }
 
 resource "aws_route53_record" "tfe" {
