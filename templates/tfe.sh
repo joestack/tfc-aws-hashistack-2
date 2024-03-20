@@ -73,6 +73,7 @@ install() {
     x=1
     while [ $x -le 10 ] 
     do
+        echo $x >> /home/ubuntu/x_count
         docker compose exec tfe tfe-health-check-status 2>&1 > /home/ubuntu/health_check
 
     if [[ $(cat /home/ubuntu/health_check | grep "All checks passed.") ]]
@@ -91,7 +92,7 @@ install() {
 }
 EOF
 
-        curl \
+        curl --insecure \
         --header "Content-Type: application/json" \
         --request POST \
         --data @payload.json \
