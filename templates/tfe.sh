@@ -101,10 +101,12 @@ EOF
         https://${tfe_fqdn}/admin/initial-admin-user?token=$ADMIN_TOKEN
 
 
-    else 
-        sleep 30
-        x=$(( $x +1 ))
+    # else 
+    #     sleep 30
+    #     x=$(( $x +1 ))
     fi
+        x=$(( $x +1 ))
+        sleep 30
     done
 
 }
