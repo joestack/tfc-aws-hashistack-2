@@ -2,7 +2,7 @@
 
 tls_is_certbot() {
   apt-get install -y certbot 
-  certbot certonly --test-cert --standalone --agree-tos -m ${tfe_cert_email} -d ${tfe_fqdn} -n
+  certbot certonly --standalone --agree-tos -m ${tfe_cert_email} -d ${tfe_fqdn} -n
 }
 
 prerequisites() {
@@ -101,9 +101,7 @@ EOF
         https://${tfe_fqdn}/admin/initial-admin-user?token=$ADMIN_TOKEN
 
     exit 0
-    # else 
-    #     sleep 30
-    #     x=$(( $x +1 ))
+ 
     fi
         x=$(( $x +1 ))
         sleep 30
