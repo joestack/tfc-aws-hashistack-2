@@ -100,7 +100,7 @@ EOF
         --data @payload.json \
         https://${tfe_fqdn}/admin/initial-admin-user?token=$ADMIN_TOKEN
 
-
+    exit 0
     # else 
     #     sleep 30
     #     x=$(( $x +1 ))
