@@ -96,7 +96,7 @@ EOF
         --header "Content-Type: application/json" \
         --request POST \
         --data @payload.json \
-        https://${tfe_fqdn}/admin/initial-admin-user?token=$${ADMIN_TOKEN}
+        https://${tfe_fqdn}/admin/initial-admin-user?token=$ADMIN_TOKEN
 
 
     else 
