@@ -22,9 +22,9 @@ services:
       TFE_ENCRYPTION_PASSWORD: "${tfe_enc_password}"
       TFE_OPERATIONAL_MODE: "disk"
       TFE_DISK_CACHE_VOLUME_NAME: "${node_name}_terraform-enterprise-cache"
-      TFE_TLS_CERT_FILE: "/etc/letsencrypt/archive/${tfe_fqdn}/fullchain1.pem"
-      TFE_TLS_KEY_FILE: "/etc/letsencrypt/archive/${tfe_fqdn}/privkey1.pem"
-      TFE_TLS_CA_BUNDLE_FILE: "/etc/letsencrypt/archive/${tfe_fqdn}/fullchain1.pem"
+      TFE_TLS_CERT_FILE: "/etc/ssl/private/terraform-enterprise/fullchain1.pem"
+      TFE_TLS_KEY_FILE: "/etc/ssl/private/terraform-enterprise/privkey1.pem"
+      TFE_TLS_CA_BUNDLE_FILE: "/etc/ssl/private/terraform-enterprise/fullchain1.pem"
       TFE_IACT_SUBNETS: "172.16.0.0/16"
     cap_add:
       - IPC_LOCK
