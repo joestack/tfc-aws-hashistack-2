@@ -76,14 +76,14 @@ install() {
         docker compose exec tfe tfe-health-check-status 2>&1 > /home/ubuntu/health_check
 
     if [[ $(cat /home/ubuntu/health_check | grep "All checks passed.") ]]
-    then
-    CONTAINER_ID=$(docker ps | grep terraform-enterprise | awk '{print $1}')
-    echo $CONTAINER_ID > /home/ubuntu/CONTAINER_ID
+        then
+        CONTAINER_ID=$(docker ps | grep terraform-enterprise | awk '{print $1}')
+        echo $CONTAINER_ID > /home/ubuntu/CONTAINER_ID
 
-    ADMIN_TOKEN=$(docker exec $CONTAINER_ID tfectl admin token)
-    echo $ADMIN_TOKEN > /home/ubuntu/ADMIN_TOKEN
+        ADMIN_TOKEN=$(docker exec $CONTAINER_ID tfectl admin token)
+        echo $ADMIN_TOKEN > /home/ubuntu/ADMIN_TOKEN
 
-    tee /home/ubuntu/payload.json > /dev/null <<EOF
+        tee /home/ubuntu/payload.json > /dev/null <<EOF
 {
   "username": "admin",
   "email": "${tfe_cert_email}",
@@ -91,11 +91,11 @@ install() {
 }
 EOF
 
-    curl \
-  --header "Content-Type: application/json" \
-  --request POST \
-  --data @payload.json \
-  https://${tfe_fqdn}/admin/initial-admin-user?token=$${ADMIN_TOKEN}
+        curl \
+        --header "Content-Type: application/json" \
+        --request POST \
+        --data @payload.json \
+        https://${tfe_fqdn}/admin/initial-admin-user?token=$${ADMIN_TOKEN}
 
 
     else 
