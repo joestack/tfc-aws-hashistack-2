@@ -82,11 +82,6 @@ output "aws_region" {
   value = var.aws_region
 }
 
-# //To be deleted - redundant
-# output "tls_self_signed_cert" {
-#   value = tls_self_signed_cert.ca.*.cert_pem[0]
-# }
-
 output "web_subnet_cidr" {
   value = aws_subnet.web_subnet.cidr_block
 }

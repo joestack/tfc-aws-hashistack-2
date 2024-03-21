@@ -160,22 +160,16 @@ variable "client_count" {
 # }
 
 
-// TERRAFORM
+// TERRAFORM FDO on Docker
 
 variable "terraform_enabled" {
   default = "false"
-}
-
-variable "tfe_fdo_method" {
-  description = "kind of deployment methodology docker, kubernetes, podman, replicated? Currently only docker is supported!"
-  default = "docker"
 }
 
 variable "tfe_release" {
   description = "The release version to be used https://developer.hashicorp.com/terraform/enterprise/releases"
   default = "v202402-1"
 }
-
 
 variable "tfe_lic" {
   description = "You must be mad to assign sensitive values to a variable here! Use one of the other options"
