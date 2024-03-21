@@ -167,7 +167,7 @@ variable "terraform_enabled" {
 }
 
 variable "tfe_fdo_method" {
-  description = "kind of deployment methodology docker, kubernetes, podman ?"
+  description = "kind of deployment methodology docker, kubernetes, podman, replicated? Currently only docker is supported!"
   default = "docker"
 }
 
@@ -176,10 +176,6 @@ variable "tfe_release" {
   default = "v202402-1"
 }
 
-variable "tfe_airgapped" {
-  description = "[true or false] The value of tfe_lic has to be `base64 -w0 ` encoded if set to true"
-  default     = "false"
-}
 
 variable "tfe_lic" {
   description = "You must be mad to assign sensitive values to a variable here! Use one of the other options"
@@ -187,7 +183,7 @@ variable "tfe_lic" {
 }
 
 variable "tfe_auth_password" {
-  description = "The initial password to access the TFE app on port 8800. If not specified, a random one will be created"
+  description = "min 10 character! The initial password to access the TFE app. If not specified, a random one will be created"
   default     = "NULL"
 }
 
@@ -200,16 +196,6 @@ variable "tfe_hostname" {
   default = "tfe-joestack"
 }
 
-variable "tfe_cert_provider" {
-  description = "TLS cert option [self-signed,certbot,tf-tls-provider]"
-  default     = "certbot"
-}
-
 variable "tfe_cert_email" {
   description = "mandatory in case of using certbot"
-}
-
-variable "tfe_auto_install" {
-  description = "run the tfe install.sh directly by the user-data script. You can run it manually if set to false"
-  default     = "false"
 }

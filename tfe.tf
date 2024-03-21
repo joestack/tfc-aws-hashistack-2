@@ -17,15 +17,8 @@ data "template_file" "tfe" {
     tfe_fqdn          = "${var.tfe_hostname}.${var.dns_domain}"
     tfe_lic           = var.tfe_lic
     tfe_auth_password = local.tfe_auth_password
-    tfe_tls_cert      = tls_locally_signed_cert.tfe.0.cert_pem
-    tfe_tls_key       = tls_private_key.tfe.0.private_key_pem
-    tfe_tls_ca        = tls_self_signed_cert.ca.0.cert_pem
-    tfe_disk_path     = "/opt/tfe"
     tfe_enc_password  = local.tfe_enc_password
-    tfe_cert_provider = var.tfe_cert_provider
     tfe_cert_email    = var.tfe_cert_email
-    tfe_auto_install  = var.tfe_auto_install
-    tfe_airgapped     = var.tfe_airgapped
     tfe_release       = var.tfe_release
   }
 }

@@ -80,6 +80,7 @@ resource "tls_locally_signed_cert" "server-node" {
 }
 
 ### TFE ###
+# 31.03.24 - no longer used (new FDO installation)
 
 resource "tls_private_key" "tfe" {
   count       = var.terraform_enabled ? 1 : 0
